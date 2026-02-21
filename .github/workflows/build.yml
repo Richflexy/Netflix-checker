@@ -9,31 +9,22 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Install dependencies
+    - name: Install system deps
       run: |
         sudo apt update
         sudo apt install -y \
+          openjdk-17-jdk \
           python3-pip \
           build-essential \
           git \
           zip \
-          unzip \
-          openjdk-17-jdk \
-          libffi-dev \
-          libssl-dev
+          unzip
 
     - name: Install Buildozer
       run: |
-        pip install --upgrade pip
         pip install buildozer cython
-
-    - name: Initialize buildozer directories
-      run: |
-        mkdir -p ~/.buildozer
-        mkdir -p ~/.buildozer/android/platform
 
     - name: Build APK
       run: |
@@ -42,5 +33,5 @@ jobs:
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: apk
+        name: NetflixChecker-APK
         path: bin/*.apk
